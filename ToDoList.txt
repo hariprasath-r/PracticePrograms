@@ -1,0 +1,119 @@
+import java.io.*;
+import java.util.*;
+
+public class ToDoList
+{
+	static String filename = "ToDo List.txt";
+
+	public static void main(String[] args)throws IOException
+	{
+		int choice = -1;
+		while (choice != 0)
+		{
+			choice = getChoice();
+			switch (choice)
+			{
+				case 0:
+					break;
+				case 1:
+					showList();
+					break;
+				case 2:
+					addItem();
+					break;
+				case 3:
+					deleteItem();
+					break;
+				default:
+					System.out.println("Invalid choice.");
+			}
+		}
+	}
+	
+	static int getChoice()
+	{
+		Scanner in = new Scanner(System.in);
+		System.out.println("\n\t\t----- Main Menu -----\n");
+		System.out.println("\t 0 -> To exit the program.");
+		System.out.println("\t 1 -> To show the list.");
+		System.out.println("\t 2 -> To add an item.");
+		System.out.println("\t 3 -> To delete an item.");
+		System.out.print("\n Enter a choice : ");
+		int c = in.nextInt();
+		return c;
+	}
+	
+	static void showList()
+	{
+		System.out.println("\n\t\t----- To-Do List -----\n");
+		System.out.println("\n\t\t----- To-Do List -----\n");
+		try
+		{
+			String line = "";
+			int number = 1;
+			Scanner r = new Scanner(new FileReader(filename));
+			while(r.hasNextLine())
+			{
+				line = r.nextLine();
+				System.out.println(number + " " + line);
+				number++;
+			}
+			System.out.println();
+			r.close();
+		}
+		catch(Exception e)
+		{	
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	static void addItem()
+	{
+		try
+		{
+			String line = "";
+			Scanner in = new Scanner(System.in);
+			System.out.print("Enter the item : ");
+			line = in.nextLine();
+			PrintWriter pw = new PrintWriter(new FileWriter(filename, true));
+			pw.println(line);
+			pw.close();
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	static void deleteItem()
+	{
+		int choice = -1;
+		showList();
+		System.out.print("Enter the item number to remove : ");
+		Scanner in = new Scanner(System.in);
+		choice = in.nextInt();
+		try
+		{
+			int number = 1;
+			String item = "";
+			ArrayList<String> a = new ArrayList<String>();
+			Scanner r = new Scanner(new FileReader(filename));
+			while(r.hasNextLine())
+			{
+				item = r.nextLine();
+				if(number != choice)
+					a.add(item);
+				number++;
+			}
+			PrintWriter pw = new PrintWriter(new FileWriter(filename));
+			for(int i=0; i < a.size(); i++)
+				pw.println(a.get(i));
+			pw.close();
+			r.close();
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+	}
+}
