@@ -21,6 +21,8 @@ public class AList
 		//
 		System.out.println("Equal :" + a1.equals(al1));
 		
+		// Gopi comment
+		
 		// Correct implementation is unknown --> removeAll();
 		//System.out.println("The total is : " + total + " and average is : " + average);
 		//al.clear();
